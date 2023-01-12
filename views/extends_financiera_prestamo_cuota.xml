@@ -1,0 +1,35 @@
+<openerp>
+  <data>
+    <!-- Cuota inherit -->
+
+    <record id="cuota_form_inherited"  model="ir.ui.view">
+      <field name="name">Extension Prestamo Cuota Form</field>
+      <field name="model">financiera.prestamo.cuota</field>
+      <field name="inherit_id" ref="financiera_prestamos.financiera_prestamo_cuota_form"/>
+      <field name="arch" type="xml">        
+        <xpath expr="//page[4]" position='after'>
+          <link rel="stylesheet" href="/financiera_siro/static/src/css/siro.css"/>
+          <page string="Siro">
+						<group>
+							<label for="siro_generar_codigo_barras" string=' '/>
+							<button name="siro_generar_codigo_barras" string="Generar Nuevo Codigo de Barras" type="object" class="oe_highlight"
+								confirm="Esta por generar un nuevo Codigo de Barras. Esta seguro?"/>
+              <field name="siro_codigo_barras" readonly="1"/>
+              <label for="siro_codigo_barras_transform" string=' '/>
+              <font face="CodebarFont">
+                <field name="siro_codigo_barras_transform" style="font-size:12px;" readonly="1"/>
+              </font>
+						</group>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+		<template id="assets_backend" name="Technical Service Assets" inherit_id="web.assets_backend">
+			<xpath expr="//link[last()]" position="after">             
+				<link rel="stylesheet" href="/financiera_siro/static/src/css/siro.css"/>
+			</xpath>    
+		</template>
+
+  </data>
+</openerp>

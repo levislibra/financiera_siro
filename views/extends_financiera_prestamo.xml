@@ -1,0 +1,40 @@
+<openerp>
+	<data>
+
+		<!-- Prestamo inherit -->
+
+		<record id="prestamo_form_inherited" model="ir.ui.view">
+			<field name="name">Extension Prestamo Form</field>
+			<field name="model">financiera.prestamo</field>
+			<field name="inherit_id" ref="financiera_prestamos.financiera_prestamo_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='pago_voluntario_entidad']" position='after'>
+					<label for="siro_pago_voluntario" string="Siro - Cupon de Pago" style="font-weight: bold;"/>
+					<field name="siro_pago_voluntario" />
+				</xpath>
+				<!-- <xpath expr="//button[@name='wizard_refinanciar_prestamo']" position='after'>
+					<button name="action_cupon_sent" class="oe_highlight"
+						string="Enviar cupon por mail" type="object"
+						attrs="{'invisible': ['|', ('pagos360_pago_voluntario', '=', False), '|', ('state', 'not in', ('acreditacion_pendiente', 'acreditado')), ('pagos_360_cupon_sent', '=', True)]}" />
+					<button name="action_cupon_sent" string="Enviar cupon por mail" type="object"
+						attrs="{'invisible': ['|', ('pagos360_pago_voluntario', '=', False), '|', ('state', 'not in', ('acreditacion_pendiente', 'acreditado')), ('pagos_360_cupon_sent', '=', False)]}" />
+				</xpath> -->
+				<xpath expr="//page[@name='otra_informacion']" position='before'>
+					<page name="siro" string="Siro">
+						<group>
+							<group string="Siro - Cupon de pago voluntario">
+								<field name="siro_cupon_sent" readonly="1" />
+								<label for="siro_crear_codigo_barras" string=" "/>
+								<button name="siro_crear_codigo_barras"
+									string="Crear cupones de pago" type="object"
+									confirm="Esta seguro que desea generar una nueva cuponera de pagos? Si existe una cuponera ya generada sobre este prestamo, sera descartada. Esta accion es irreversible!" />
+							</group>
+						</group>
+						<group></group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</openerp>
