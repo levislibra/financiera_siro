@@ -76,8 +76,6 @@ class ExtendsFinancieraPrestamoCuota(models.Model):
 		returning_codebar_font = returning_codebar_font + "\314"
 		return returning_codebar_font
 
-
-
 	@api.one
 	def siro_generar_codigo_barras(self):
 		_logger.info("Generando Codigo de Barras")
@@ -106,4 +104,4 @@ class ExtendsFinancieraPrestamoCuota(models.Model):
 		codigo_barras += str(segundo_digito_verificador)
 		print("Codigo de Barras: " + codigo_barras)
 		self.siro_codigo_barras = codigo_barras
-		self.siro_codigo_barras_transform = self.create_codebar_font("04440000132671207300093700060098385000000000515000934600")
+		self.siro_codigo_barras_transform = self.create_codebar_font(codigo_barras)

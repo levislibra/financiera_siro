@@ -10,16 +10,19 @@
         <xpath expr="//page[4]" position='after'>
           <link rel="stylesheet" href="/financiera_siro/static/src/css/siro.css"/>
           <page string="Siro">
-						<group>
-							<label for="siro_generar_codigo_barras" string=' '/>
-							<button name="siro_generar_codigo_barras" string="Generar Nuevo Codigo de Barras" type="object" class="oe_highlight"
-								confirm="Esta por generar un nuevo Codigo de Barras. Esta seguro?"/>
-              <field name="siro_codigo_barras" readonly="1"/>
-              <label for="siro_codigo_barras_transform" string=' '/>
-              <font face="CodebarFont">
-                <field name="siro_codigo_barras_transform" style="font-size:12px;" readonly="1"/>
-              </font>
-						</group>
+            <group>
+              <group>
+                <label for="siro_generar_codigo_barras" string=' '/>
+                <button name="siro_generar_codigo_barras" string="Generar Nuevo Codigo de Barras" type="object" class="oe_highlight"
+                  confirm="Esta por generar un nuevo Codigo de Barras. Esta seguro?"/>
+                <field name="siro_codigo_barras" readonly="1"/>
+              </group>
+              <group col="1">
+                <font face="CodebarFont">
+                  <field name="siro_codigo_barras_transform" style="font-size:30px;" readonly="1"/>
+                </font>
+              </group>
+            </group>
           </page>
         </xpath>
       </field>
