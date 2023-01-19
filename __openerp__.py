@@ -30,6 +30,7 @@
         'views/financiera_siro_config.xml',
         'views/extends_financiera_prestamo.xml',
         'views/extends_financiera_prestamo_cuota.xml',
+        'views/generic_reports.xml',
     ],
     'css': [
 		'static/src/css/siro.css',

@@ -2,5 +2,19 @@
 @font-face {
 	font-family: 'CodebarFont';
 	src: url('/financiera_siro/static/src/fonts/IDAutomationHI25L.ttf') format('truetype');
-	
+	text-align: center;
 }
+
+/* .headt td {
+	min-height: 235px;
+	height: 100px;
+}
+
+.headt tr {
+	min-height: 235px;
+	height: 100px;
+}
+
+table {
+	color: rgb(61, 62, 62);
+} */
