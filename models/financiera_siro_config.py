@@ -9,10 +9,10 @@ import logging
 _logger = logging.getLogger(__name__)
 
 TEST_AUTH_API_URL = "https://apisesionhomologa.bancoroela.com.ar:49221/auth/Sesion"
-PROD_AUTH_API_URL = "https://apisesionhomologa.bancoroela.com.ar:49221/auth/Sesion"
+PROD_AUTH_API_URL = "https://apisesion.bancoroela.com.ar:49221/auth/Sesion"
 
 TEST_API_SIRO_URL = "https://apisirohomologa.bancoroela.com.ar:49220"
-PROD_API_SIRO_URL = "https://apisirohomologa.bancoroela.com.ar:49220"
+PROD_API_SIRO_URL = "https://apisiro.bancoroela.com.ar:49220/"
 
 EMPRESA_SERVICIO = "0447"
 IDENTIFICADOR_CONCEPTO = "0"
@@ -33,6 +33,7 @@ class FinancieraSiroConfig(models.Model):
 	empresa_servicio = fields.Char('Empresa de Servicio', default=EMPRESA_SERVICIO, help="4 dígitos que no varían, otorgado por SIRO.")
 	identificador_concepto = fields.Char('Identificador Concepto', default=IDENTIFICADOR_CONCEPTO)
 	identificador_cuenta = fields.Char('Identificador Cuenta')
+	empresa_cuit = fields.Char('Empresa CUIT')
 	
 	journal_id = fields.Many2one('account.journal', 'Diario de Cobro', domain="[('type', 'in', ('cash', 'bank'))]")
 	factura_electronica = fields.Boolean('Factura electronica')

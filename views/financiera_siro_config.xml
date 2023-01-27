@@ -37,6 +37,7 @@
                 <field name="empresa_servicio"/>
                 <field name="identificador_concepto"/>
                 <field name="identificador_cuenta"/>
+                <field name="empresa_cuit"/>
               </group>
               <group string="Cobro y Facturacion">
                 <field name="journal_id"/>

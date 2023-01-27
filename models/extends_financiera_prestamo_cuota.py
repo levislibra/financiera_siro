@@ -26,42 +26,18 @@ class ExtendsFinancieraPrestamoCuota(models.Model):
 	siro_codigo_barras = fields.Char(string='Codigo de Barras')
 	siro_codigo_barras_transform = fields.Char(string='Codigo de Barras Transformado')
 
-	# static function create_codebar_font($string_code) {
-
-	# 	$code_numbers = str_split($string_code, 2);
-
-	# 	$returning_codebar_font = 'Ë';
-	# 	foreach ($code_numbers as $key => $number) {
-	# 		if ($number > 93) {
-	# 			$returning_codebar_font = $returning_codebar_font . chr(intval($number)+103);
-	# 		} else {
-	# 			$returning_codebar_font = $returning_codebar_font . chr(intval($number)+33);
-	# 		}
-			
-	# 	}
-	# 	$returning_codebar_font = $returning_codebar_font . 'Ì';
-	# 	$returning_codebar_font = RoelaBarcodeUtils::replace_special_characters($returning_codebar_font);
-		
-	# 	return $returning_codebar_font;
-	# }
-
-
 	def replace_special_characters(self, code):
 		code = code.replace(chr(60) , "&#60;")
-
 		code = code.replace(chr(61) , "&#61;")
 		code = code.replace(chr(62) , "&#62;")
 		code = code.replace(chr(63) , "&#63;")
-
 		code = code.replace(chr(197) , "&#197;")
 		code = code.replace(chr(198) , "&#198;")
 		code = code.replace(chr(199) , "&#199;")
 		code = code.replace(chr(200) , "&#200;")
 		code = code.replace(chr(201) , "&#201;")
 		code = code.replace(chr(202) , "&#202;")
-
 		code = code.replace(chr(209) , "&#209;")
-
 		return code
 	
 	def create_codebar_font(self, string_code):
@@ -105,3 +81,43 @@ class ExtendsFinancieraPrestamoCuota(models.Model):
 		print("Codigo de Barras: " + codigo_barras)
 		self.siro_codigo_barras = codigo_barras
 		self.siro_codigo_barras_transform = self.create_codebar_font(codigo_barras)
+
+	@api.one
+	def siro_cobrar_y_facturar(self, payment_date, journal_id, factura_electronica, amount, invoice_date, punitorio_stop_date, solicitud_id=None):
+		print("siro_cobrar_y_facturar")
+		partner_id = self.partner_id
+		fpcmc_values = {
+			'partner_id': partner_id.id,
+			'company_id': self.company_id.id,
+		}
+		multi_cobro_id = self.env['financiera.prestamo.cuota.multi.cobro'].create(fpcmc_values)
+		partner_id.multi_cobro_ids = [multi_cobro_id.id]
+		# Fijar fecha punitorio
+		self.punitorio_fecha_actual = punitorio_stop_date
+		print("Punitorio stop date: ", str(punitorio_stop_date))
+		if self.saldo > 0:
+			self.confirmar_cobrar_cuota(payment_date, journal_id, amount, multi_cobro_id)
+			if len(multi_cobro_id.payment_ids) > 0:
+				if solicitud_id:
+					solicitud_id.payment_id = multi_cobro_id.payment_ids[0]
+		# Facturacion cuota
+		if not self.facturada:
+			fpcmf_values = {
+				'invoice_type': 'interes',
+				'company_id': self.company_id.id,
+			}
+			multi_factura_id = self.env['financiera.prestamo.cuota.multi.factura'].create(fpcmf_values)
+			self.facturar_cuota(invoice_date, factura_electronica, multi_factura_id, multi_cobro_id)
+			if multi_factura_id.invoice_amount == 0:
+				multi_factura_id.unlink()
+		multi_factura_punitorio_id = None
+		if self.punitorio_a_facturar > 0:
+			fpcmf_values = {
+				'invoice_type': 'punitorio',
+				'company_id': self.company_id.id,
+			}
+			multi_factura_punitorio_id = self.env['financiera.prestamo.cuota.multi.factura'].create(fpcmf_values)
+			self.facturar_punitorio_cuota(invoice_date, factura_electronica, multi_factura_punitorio_id, multi_cobro_id)
+			if multi_factura_punitorio_id != None and multi_factura_punitorio_id.invoice_amount == 0:
+				multi_factura_punitorio_id.unlink()
+

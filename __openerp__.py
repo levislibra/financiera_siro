@@ -28,6 +28,7 @@
         'security/security.xml',
         'views/extends_res_company.xml',
         'views/financiera_siro_config.xml',
+        'views/financiera_siro_cobro.xml',
         'views/extends_financiera_prestamo.xml',
         'views/extends_financiera_prestamo_cuota.xml',
         'views/generic_reports.xml',

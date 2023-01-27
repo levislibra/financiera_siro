@@ -1,0 +1,96 @@
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="siro_cobro_tree">
+			<field name="name">financiera.siro.cobro.tree</field>
+			<field name="model">financiera.siro.cobro</field>
+			<field name="arch" type="xml">
+				<tree create="true" delete="true">
+					<field name="create_date" string="Fecha" readonly="1" />
+					<field name="partner_id" readonly="1" />
+					<field name="cuota_id" readonly="1" />
+					<field name="total" readonly="1" />
+					<field name="id_cobro" readonly="1" />
+					<field name="fecha_cobro" readonly="1" />
+					<field name="fecha_acreditacion" readonly="1" />
+					<field name="payment_id" readonly="1" />
+					<field name="company_id" groups="base.group_erp_manager" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- Filter Execution -->
+
+		<record model="ir.ui.view" id="filter_siro_cobro_view">
+			<field name="name">financiera.siro.cobro.filter</field>
+			<field name="model">financiera.siro.cobro</field>
+			<field name="arch" type="xml">
+				<search>
+					<filter string="Ultimos 7 dias" name="last_7_days"
+						domain="[('create_date','&gt;', (context_today() - datetime.timedelta(days=7)).strftime('%%Y-%%m-%%d') )]" />
+					<filter string="Ultimos 15 dias" name="last_15_days"
+						domain="[('create_date','&gt;', (context_today() - datetime.timedelta(days=15)).strftime('%%Y-%%m-%%d') )]" />
+					<filter string="Ultimos 30 dias" name="last_30_days"
+						domain="[('create_date','&gt;', (context_today() - datetime.timedelta(days=30)).strftime('%%Y-%%m-%%d') )]" />
+					<filter string="Ultimos 60 dias" name="last_60_days"
+						domain="[('create_date','&gt;', (context_today() - datetime.timedelta(days=60)).strftime('%%Y-%%m-%%d') )]" />
+					<filter string="Hoy" name="hoy"
+						domain="[('create_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('create_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]" />
+					<filter string="Hoy a la mañana" name="manana"
+						domain="[('create_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('create_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(11,59,59)))]" />
+					<filter string="Hoy a la tarde" name="tarde"
+						domain="[('create_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(12,0,0))), ('create_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(18,59,59)))]" />
+					<filter string="Hoy a la noche" name="noche"
+						domain="[('create_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(19,0,0))), ('create_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]" />
+					<separator />
+					<field name="partner_id" />
+					<field name="create_date" />
+					<field name="company_id" groups="base.group_erp_manager" />
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="siro_cobro_form">
+			<field name="name">financiera.siro.cobro.form</field>
+			<field name="model">financiera.siro.cobro</field>
+			<field name="arch" type="xml">
+				<form create="false" delete="false">
+					<header>
+						<button name="siro_obtener_cobros" string="siro_obtener_cobros" type="object" class="oe_highlight" />
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="company_id" groups="base.group_erp_manager" />
+								<field name="create_date" string="Fecha" readonly="1" />
+								<field name="partner_id" readonly="1" />
+								<field name="cuota_id" readonly="1" />
+								<field name="total" readonly="1" />
+								<field name="id_cobro" readonly="1" />
+								<field name="fecha_cobro" readonly="1" />
+								<field name="fecha_acreditacion" readonly="1" />
+								<field name="payment_id" readonly="1" />
+							</group>
+							<group>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="siro_cobro_action">
+			<field name="name">Ejecuciones</field>
+			<field name="res_model">financiera.siro.cobro</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_ids"
+				eval="[(5, 0, 0), 
+				(0, 0, {'view_mode': 'tree', 'view_id': ref('siro_cobro_tree')}), 
+				(0, 0, {'view_mode': 'form', 'view_id': ref('siro_cobro_form')})]" />
+		</record>
+
+		<menuitem name="Cobros" id="menu_siro_cobro_action" parent="menu_siro"
+			action="siro_cobro_action" sequence="0" />
+
+	</data>
+</openerp>
