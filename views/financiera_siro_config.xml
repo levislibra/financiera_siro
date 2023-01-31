@@ -19,7 +19,8 @@
       <field name="arch" type="xml">
         <form create="false" delete="false">
           <header>
-            <button name="siro_get_token" string="Test conexion" type="object" class="oe_highlight"/>
+            <button name="siro_get_token" string="Test conexion" type="object"/>
+            <button name="siro_obtener_cobros" string="Obtener Cobros" type="object" class="oe_highlight"/>
             <field name="state" widget="statusbar" clickable="1"/>
           </header>
           <sheet>
@@ -41,6 +42,7 @@
               </group>
               <group string="Cobro y Facturacion">
                 <field name="journal_id"/>
+                <field name="cobros_days_check"/>
                 <field name="factura_electronica"/>
               </group>
               <group string="Email y reporte">

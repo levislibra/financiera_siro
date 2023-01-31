@@ -56,7 +56,6 @@
 			<field name="arch" type="xml">
 				<form create="false" delete="false">
 					<header>
-						<button name="siro_obtener_cobros" string="siro_obtener_cobros" type="object" class="oe_highlight" />
 					</header>
 					<sheet>
 						<group>
