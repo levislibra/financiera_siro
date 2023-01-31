@@ -117,8 +117,8 @@ class FinancieraSiroConfig(models.Model):
 		# fecha actual
 		datenow = datetime.now()
 		body = {
-			'fecha_desde': (datenow - timedelta(days=self.cobros_days_check)).strftime("%Y/%m/%dT%H:%M:%S"), #"2023-01-01T15:00:00.000Z",
-			'fecha_hasta': datenow.strftime("%Y/%m/%dT%H:%M:%S"), #"2023-01-01T15:00:00.000Z"
+			'fecha_desde': (datenow - timedelta(days=self.cobros_days_check)).strftime("%Y/%m/%dT%H:%M:%S"),
+			'fecha_hasta': (datenow - timedelta(hours=3)).strftime("%Y/%m/%dT%H:%M:%S"),
 			'cuit_administrador': self.company_id.siro_id.empresa_cuit,
 			'nro_empresa': self.company_id.siro_id.identificador_cuenta,
 		}
@@ -126,6 +126,8 @@ class FinancieraSiroConfig(models.Model):
 		r = requests.post(SIRO_LISTADO_PROCESO, data=json.dumps(body), headers=headers)
 		data = r.json()
 		print("data: ", data)
+		if 'Message' in data:
+			raise UserError("Siro error: %s" % data['Message'])
 		for cobro in data:
 			# Id de cobro
 			id_cobro_string = cobro[-46:-36]
