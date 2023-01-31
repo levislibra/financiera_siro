@@ -2,3 +2,6 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 
 user_financiera_siro_config,financiera.siro.config,model_financiera_siro_config,financiera_siro.user,1,0,0,0
 manager_financiera_siro_config,financiera.siro.config,model_financiera_siro_config,financiera_siro.manager,1,1,1,1
+
+user_financiera_siro_cobro,financiera.siro.cobro,model_financiera_siro_cobro,financiera_siro.user,1,1,1,0
+manager_financiera_siro_cobro,financiera.siro.cobro,model_financiera_siro_cobro,financiera_siro.manager,1,1,1,1

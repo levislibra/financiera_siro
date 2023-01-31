@@ -159,6 +159,7 @@ class FinancieraSiroConfig(models.Model):
 					'fecha_cobro': fecha_cobro,
 					'fecha_acreditacion': fecha_acreditacion,
 					'total': importe_pagado,
+					'company_id': self.company_id.id,
 				})
 				journal_id = self.company_id.siro_id.journal_id
 				factura_electronica = self.company_id.siro_id.factura_electronica

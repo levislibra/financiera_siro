@@ -9,12 +9,12 @@
 			[('company_id','child_of',[user.company_id.id])]</field>
 	</record>
 
-	<!-- <record id="financiera_pagos360_solicitud_rule" model="ir.rule">
-		<field name="name">Financiera Pagos 360 Solicitud multi-company</field>
-		<field name="model_id" ref="financiera_siro.model_financiera_pagos360_solicitud" />
+	<record id="financiera_siro_cobro_rule" model="ir.rule">
+		<field name="name">Financiera Siro Cobro</field>
+		<field name="model_id" ref="financiera_siro.model_financiera_siro_cobro" />
 		<field name="domain_force">
 			[('company_id','child_of',[user.company_id.id])]</field>
-	</record> -->
+	</record>
 
 	<!-- </data> -->
 </openerp>
