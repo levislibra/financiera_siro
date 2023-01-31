@@ -17,7 +17,7 @@ SECUENCIA_VERIFICADORA = [
 	9,3,5,7,9,3,5,7,9,3,
 	5,7,9,3
 ]
-DIGITO_VERIFICADOR_ADICIONAL = 9
+DIGITO_VERIFICADOR_ADICIONAL = 5
 
 class ExtendsFinancieraPrestamoCuota(models.Model):
 	_inherit = 'financiera.prestamo.cuota' 
@@ -54,7 +54,6 @@ class ExtendsFinancieraPrestamoCuota(models.Model):
 
 	@api.one
 	def siro_generar_codigo_barras(self):
-		_logger.info("Generando Codigo de Barras")
 		siro_id = self.company_id.siro_id
 		primer_digito_verificador = 0
 		segundo_digito_verificador = 0
@@ -64,13 +63,11 @@ class ExtendsFinancieraPrestamoCuota(models.Model):
 			codigo_barras += str(self.id).zfill(8)
 			codigo_barras += RELLENO
 			codigo_barras += siro_id.identificador_cuenta
-		print("Codigo de Barras: " + codigo_barras)
 		suma_de_productos = 0
 		i = 0
 		for digito in SECUENCIA_VERIFICADORA:
 			suma_de_productos += digito * int(codigo_barras[i])
 			i += 1
-		_logger.info("suma_de_productos: %s" % str(suma_de_productos))
 		primer_digito_verificador = math.trunc(suma_de_productos / 2)
 		primer_digito_verificador = primer_digito_verificador % 10
 		codigo_barras += str(primer_digito_verificador)
@@ -78,13 +75,11 @@ class ExtendsFinancieraPrestamoCuota(models.Model):
 		segundo_digito_verificador = math.trunc(suma_de_productos / 2)
 		segundo_digito_verificador = segundo_digito_verificador % 10
 		codigo_barras += str(segundo_digito_verificador)
-		print("Codigo de Barras: " + codigo_barras)
 		self.siro_codigo_barras = codigo_barras
 		self.siro_codigo_barras_transform = self.create_codebar_font(codigo_barras)
 
 	@api.one
 	def siro_cobrar_y_facturar(self, payment_date, journal_id, factura_electronica, amount, invoice_date, punitorio_stop_date, solicitud_id=None):
-		print("siro_cobrar_y_facturar")
 		partner_id = self.partner_id
 		fpcmc_values = {
 			'partner_id': partner_id.id,
@@ -94,7 +89,6 @@ class ExtendsFinancieraPrestamoCuota(models.Model):
 		partner_id.multi_cobro_ids = [multi_cobro_id.id]
 		# Fijar fecha punitorio
 		self.punitorio_fecha_actual = punitorio_stop_date
-		print("Punitorio stop date: ", str(punitorio_stop_date))
 		if self.saldo > 0:
 			self.confirmar_cobrar_cuota(payment_date, journal_id, amount, multi_cobro_id)
 			if len(multi_cobro_id.payment_ids) > 0:
