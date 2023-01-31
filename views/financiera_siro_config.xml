@@ -24,16 +24,17 @@
             <field name="state" widget="statusbar" clickable="1"/>
           </header>
           <sheet>
-						<group string="Configuracion de autenticacion">
-							<field name="company_id" groups="base.group_erp_manager"/>
-							<field name="name"/>
-							<field name="usuario"/>
+            <group string="Configuracion de autenticacion">
+              <field name="company_id" groups="base.group_erp_manager"/>
+              <field name="name"/>
+              <field name="usuario"/>
               <field name="password"/>
               <field name="token"/>
               <field name="token_expires"/>
-						</group>
+            </group>
             <group>
               <group string="Codigo de barras">
+                <field name="set_default_payment"/>
                 <field name="codigo_barras"/>
                 <field name="empresa_servicio"/>
                 <field name="identificador_concepto"/>
