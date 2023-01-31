@@ -26,8 +26,6 @@ class ExtendsFinancieraPrestamo(models.Model):
 		if self.siro_pago_voluntario:
 			for cuota_id in self.cuota_ids:
 				cuota_id.siro_generar_codigo_barras()
-		else:
-			raise ValidationError("El prestamo no tiene marcada la opcion: Siro - Cupon de Pago.")
 
 	@api.one
 	def enviar_a_acreditacion_pendiente(self):
