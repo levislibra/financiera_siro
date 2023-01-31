@@ -118,7 +118,7 @@ class FinancieraSiroConfig(models.Model):
 		datenow = datetime.now()
 		body = {
 			'fecha_desde': (datenow - timedelta(days=self.cobros_days_check)).strftime("%Y/%m/%dT%H:%M:%S"),
-			'fecha_hasta': (datenow - timedelta(hours=3)).strftime("%Y/%m/%dT%H:%M:%S"),
+			'fecha_hasta': (datenow - timedelta(hours=27)).strftime("%Y/%m/%dT%H:%M:%S"),
 			'cuit_administrador': self.company_id.siro_id.empresa_cuit,
 			'nro_empresa': self.company_id.siro_id.identificador_cuenta,
 		}
