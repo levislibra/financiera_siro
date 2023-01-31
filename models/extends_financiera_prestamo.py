@@ -30,7 +30,8 @@ class ExtendsFinancieraPrestamo(models.Model):
 	@api.one
 	def enviar_a_acreditacion_pendiente(self):
 		super(ExtendsFinancieraPrestamo, self).enviar_a_acreditacion_pendiente()
-		self.siro_crear_codigo_barras()
+		if self.siro_pago_voluntario:
+			self.siro_crear_codigo_barras()
 
 	@api.multi
 	def action_cupon_sent(self):
