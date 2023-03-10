@@ -34,7 +34,7 @@ class ExtendsFinancieraPrestamo(models.Model):
 			self.siro_crear_codigo_barras()
 
 	@api.multi
-	def action_cupon_sent(self):
+	def siro_action_cupon_sent(self):
 		""" Open a window to compose an email, with the edi payment template
 			message loaded by default
 		"""
